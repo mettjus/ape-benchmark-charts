@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom'
 
 import 'react-vis/dist/style.css'
 import './styles.css'
-import { ConsumoEnergiaPrimariaChart } from './charts/consumo-energia-primaria'
-import { SpeseEnergeticheChart } from './charts/spese-energetiche'
+import Charts from './charts'
+import Tests from './tests'
 
 function App() {
   return (
     <div>
-      <ConsumoEnergiaPrimariaChart />
-      <SpeseEnergeticheChart />
+      {/* <Charts /> */}
+      <Tests />
     </div>
   )
 }
