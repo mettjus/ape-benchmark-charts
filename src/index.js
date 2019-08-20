@@ -9,8 +9,8 @@ import Tests from './tests'
 function App() {
   return (
     <div>
-      {/* <Charts /> */}
-      <Tests />
+      <Charts />
+      {/* <Tests /> */}
     </div>
   )
 }

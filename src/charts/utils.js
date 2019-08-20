@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
+import echarts from 'echarts'
 
 export const CrosshairPanel = ({ children }) => (
   <div
@@ -11,3 +12,11 @@ export const CrosshairPanel = ({ children }) => (
     {children}
   </div>
 )
+
+export const EChart = ({ option, style }) => {
+  const ref = useRef()
+  useEffect(() => {
+    echarts.init(ref.current).setOption(option)
+  }, [option])
+  return <div ref={ref} style={{ width: 300, height: 300, ...style }} />
+}

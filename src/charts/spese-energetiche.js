@@ -93,7 +93,7 @@ export const SpeseEnergeticheChart = () => {
           onNearestX={({ x }, { index }) =>
             setCrosshairValue({ x, ...data[index] })
           }
-          color="tomato"
+          color="#3fb0ac"
           data={data.map(({ anno, spesa }) => ({ x: anno, y: spesa }))}
         />
         {renderCrosshair()}
