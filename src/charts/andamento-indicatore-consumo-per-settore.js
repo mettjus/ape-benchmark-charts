@@ -53,6 +53,19 @@ const getOptions = ({ color, mu }) => ({
           shadowColor: 'rgba(0, 0, 0, 0.5)',
         },
       },
+      markLine: {
+        lineStyle: {
+          color: 'black',
+        },
+        data: [
+          {
+            yAxis: 100,
+          },
+          {
+            yAxis: 200,
+          },
+        ],
+      },
     },
   ],
   legend: {
@@ -94,41 +107,49 @@ const Chart = ({ title, color, mu, style } = {}) => {
   )
 }
 
-export const ConsumiEnergiaPerVettore = () => {
+const charts = [
+  {
+    title: 'Energia termica per edifici',
+    color: 'red',
+    mu: 'kWh',
+  },
+  {
+    title: 'Energia elettrica per edifici',
+    color: '#cdd422',
+    mu: (
+      <span>
+        kWh<sub>el</sub>
+      </span>
+    ),
+  },
+  {
+    title: 'Illuminazione pubblica',
+    color: '#431c5d',
+    mu: (
+      <span>
+        kWh<sub>el</sub>
+      </span>
+    ),
+  },
+  { title: 'Veicoli', color: '#e05915', mu: 'kWh' },
+]
+
+export const AndamentoIndicatoriConsumoPerSettore = () => {
   return (
     <div>
       <h3 style={{ textAlign: 'center' }}>
-        Consumi annuali di energia divisi per vettore energetico
-        {/* [kWh <sub>el</sub>, mc, l, kg, ecc.] */}
+        Andamento storico degli indicatori generali di consumo
       </h3>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-        <Chart
-          title="Boh"
-          mu={
-            <span>
-              kWh<sub>el</sub>
-            </span>
-          }
-          style={{ flexBasis: '50%' }}
-        />
-        <Chart
-          title="Gas"
-          mu="mc"
-          style={{ flexBasis: '50%' }}
-          color="#cdd422"
-        />
-        <Chart
-          title="Gasolio"
-          mu="l"
-          style={{ flexBasis: '50%' }}
-          color="#431c5d"
-        />
-        <Chart
-          title="Cippato"
-          mu="kg"
-          style={{ flexBasis: '50%' }}
-          color="#e05915"
-        />
+        {charts.map(({ title, mu, color }, index) => (
+          <Chart
+            key={index}
+            title={title}
+            mu={mu}
+            color={color}
+            style={{ flexBasis: '50%' }}
+          />
+        ))}
       </div>
     </div>
   )

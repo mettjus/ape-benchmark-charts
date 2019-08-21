@@ -29,8 +29,6 @@ const data = [
   },
 ]
 
-window.d3format = d3format
-
 const getOptions = ({ color }) => ({
   xAxis: {
     type: 'category',
@@ -85,7 +83,9 @@ const Chart = ({ title, color, style } = {}) => {
 export const SpesePerVettore = () => {
   return (
     <div>
-      <h3>Spese energetiche annuali divise per vettore energetico [€]</h3>
+      <h3 style={{ textAlign: 'center' }}>
+        Spese energetiche annuali divise per vettore energetico{/*  [€] */}
+      </h3>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
         <Chart title="Boh" style={{ flexBasis: '50%' }} />
         <Chart title="Gas" style={{ flexBasis: '50%' }} color="#cdd422" />

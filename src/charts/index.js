@@ -10,6 +10,10 @@ import { ConsumiEnergiaPrimariaPerSettoreChart } from './consumi-energia-primari
 import { SpesePerSettoreChart } from './spesa-per-settore'
 import { EnergiaElettricaPerCategorieEdificiChart } from './energia-elettrica-per-categorie-edifici'
 import { EnergiaTermicaPerCategorieEdificiChart } from './energia-termica-per-categorie-edifici'
+import { AndamentoConsumiPerSettore } from './andamento-consumi-per-settore'
+import { AndamentoConsumiTermiciSuGradiGiorno } from './andamento-consumi-termici-su-gradi-giorno'
+import { AndamentoSpesePerSettore } from './andamento-spese-per-settore'
+import { AndamentoIndicatoriConsumoPerSettore } from './andamento-indicatore-consumo-per-settore'
 
 export default () => (
   <div>
@@ -25,5 +29,9 @@ export default () => (
       <EnergiaElettricaPerCategorieEdificiChart />
       <EnergiaTermicaPerCategorieEdificiChart />
     </div>
+    <AndamentoConsumiPerSettore />
+    <AndamentoConsumiTermiciSuGradiGiorno />
+    <AndamentoSpesePerSettore />
+    <AndamentoIndicatoriConsumoPerSettore />
   </div>
 )

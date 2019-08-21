@@ -68,12 +68,12 @@ const getOptions = ({ color }) => ({
   },
 })
 
-export const ConsumoEnergiaPrimariaChart = () => {
+export const AndamentoConsumiTermiciSuGradiGiorno = () => {
   return (
     <EChart
       option={{
         title: {
-          text: 'Consumi annuali di energia primaria',
+          text: 'Consumi di energia termica pesati sui gradi giorno',
           subtext: 'kWh',
           x: 'center',
         },

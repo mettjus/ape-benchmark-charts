@@ -1,18 +1,6 @@
-import React, { useState } from 'react'
-import {
-  XYPlot,
-  XAxis,
-  YAxis,
-  VerticalGridLines,
-  HorizontalGridLines,
-  VerticalBarSeries,
-  makeWidthFlexible,
-  Crosshair,
-} from 'react-vis'
-import { CrosshairPanel } from './utils'
-
-const BarSeries = VerticalBarSeries
-const FlexibleXPlot = makeWidthFlexible(XYPlot)
+import React from 'react'
+import { EChart } from './utils'
+import { format as d3format } from 'd3-format'
 
 const data = [
   {
@@ -41,63 +29,57 @@ const data = [
   },
 ]
 
-const useCrosshair = (initialValue = null) => {
-  const [crosshairValue, setCrosshairValue] = useState(initialValue)
-  const renderCrosshair = () =>
-    crosshairValue && (
-      <Crosshair values={[crosshairValue]}>
-        <CrosshairPanel>
-          <table style={{ width: 120 }}>
-            <tbody>
-              <tr>
-                <th>Anno</th>
-                <td>{crosshairValue.anno}</td>
-              </tr>
-              <tr>
-                <th>Spesa</th>
-                <td>{crosshairValue.spesa} €</td>
-              </tr>
-            </tbody>
-          </table>
-        </CrosshairPanel>
-      </Crosshair>
-    )
-  return {
-    setCrosshairValue,
-    renderCrosshair,
-  }
-}
+const getOptions = ({ color }) => ({
+  xAxis: {
+    type: 'category',
+    data: data.map(({ anno, spesa }) => anno),
+  },
+  yAxis: {
+    type: 'value',
+    axisLabel: {
+      formatter: (value, index) => d3format('~s')(value),
+    },
+  },
+  series: [
+    {
+      data: data.map(({ anno, spesa }) => spesa),
+      type: 'bar',
+      color,
+      itemStyle: {
+        emphasis: {
+          shadowBlur: 20,
+          shadowOffsetX: 0,
+          shadowColor: 'rgba(0, 0, 0, 0.5)',
+        },
+      },
+    },
+  ],
+  legend: {
+    orient: 'vertical',
+    left: 'left',
+    data: data.map(({ anno }) => anno),
+  },
+  tooltip: {
+    trigger: 'item',
+    formatter: ({ name, value }) => `<table><tbody>
+    <tr><th>Anno</th><td>${name}</td></tr>
+    <tr><th>Spesa</th><td>${value} €</td></tr>
+  </tbody></table>`,
+  },
+})
 
 export const SpeseEnergeticheChart = () => {
-  const { setCrosshairValue, renderCrosshair } = useCrosshair()
-  const yDomain = [0, Math.max(...data.map(d => d.spesa)) * 1.1]
   return (
-    <div>
-      <h3>Spese energetiche annuali [€]</h3>
-      <FlexibleXPlot
-        height={200}
-        yDomain={yDomain}
-        xType="ordinal"
-        onMouseLeave={() => setCrosshairValue(null)}
-        margin={{ left: 60 }}
-      >
-        <VerticalGridLines />
-        <HorizontalGridLines />
-        <XAxis />
-        <YAxis
-          tickFormat={(v, i, scale, tickTotal) =>
-            scale.tickFormat(tickTotal, 's')(v)
-          }
-        />
-        <BarSeries
-          onNearestX={({ x }, { index }) =>
-            setCrosshairValue({ x, ...data[index] })
-          }
-          color="#3fb0ac"
-          data={data.map(({ anno, spesa }) => ({ x: anno, y: spesa }))}
-        />
-        {renderCrosshair()}
-      </FlexibleXPlot>
-    </div>
+    <EChart
+      option={{
+        title: {
+          text: 'Spese energetiche annuali',
+          subtext: '€',
+          x: 'center',
+        },
+        ...getOptions({ color: '#3fb0ac' }),
+      }}
+      style={{ width: '100%' }}
+    />
   )
 }

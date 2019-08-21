@@ -6,34 +6,34 @@ import { format as d3format } from 'd3-format'
 const data = [
   {
     anno: 2014,
-    consumo: 300,
+    spesa: 300000,
   },
   {
     anno: 2015,
-    consumo: 290,
+    spesa: 290000,
   },
   {
     anno: 2016,
-    consumo: 295,
+    spesa: 295000,
   },
   {
     anno: 2017,
-    consumo: 287,
+    spesa: 287000,
   },
   {
     anno: 2018,
-    consumo: 282,
+    spesa: 282000,
   },
   {
     anno: 2019,
-    consumo: 195,
+    spesa: 195000,
   },
 ]
 
 const getOptions = ({ color, mu }) => ({
   xAxis: {
     type: 'category',
-    data: data.map(({ anno, consumo }) => anno),
+    data: data.map(({ anno, spesa }) => anno),
   },
   yAxis: {
     type: 'value',
@@ -43,7 +43,7 @@ const getOptions = ({ color, mu }) => ({
   },
   series: [
     {
-      data: data.map(({ anno, consumo }) => consumo),
+      data: data.map(({ anno, spesa }) => spesa),
       type: 'bar',
       color,
       itemStyle: {
@@ -86,7 +86,7 @@ const Chart = ({ title, color, mu, style } = {}) => {
   return (
     <EChart
       option={{
-        title: { text: title, x: 'center' },
+        title: { text: title, subtext: mu, x: 'center' },
         ...getOptions({ color, mu }),
       }}
       style={style}
@@ -94,41 +94,42 @@ const Chart = ({ title, color, mu, style } = {}) => {
   )
 }
 
-export const ConsumiEnergiaPerVettore = () => {
+const charts = [
+  {
+    title: 'Energia termica per edifici',
+    color: 'red',
+    mu: '€',
+  },
+  {
+    title: 'Energia elettrica per edifici',
+    color: '#cdd422',
+    mu: '€',
+  },
+  {
+    title: 'Illuminazione pubblica',
+    color: '#431c5d',
+    mu: '€',
+  },
+  { title: 'Veicoli', color: '#e05915', mu: '€' },
+]
+
+export const AndamentoSpesePerSettore = () => {
   return (
     <div>
       <h3 style={{ textAlign: 'center' }}>
-        Consumi annuali di energia divisi per vettore energetico
+        Spese annuali per settore
         {/* [kWh <sub>el</sub>, mc, l, kg, ecc.] */}
       </h3>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-        <Chart
-          title="Boh"
-          mu={
-            <span>
-              kWh<sub>el</sub>
-            </span>
-          }
-          style={{ flexBasis: '50%' }}
-        />
-        <Chart
-          title="Gas"
-          mu="mc"
-          style={{ flexBasis: '50%' }}
-          color="#cdd422"
-        />
-        <Chart
-          title="Gasolio"
-          mu="l"
-          style={{ flexBasis: '50%' }}
-          color="#431c5d"
-        />
-        <Chart
-          title="Cippato"
-          mu="kg"
-          style={{ flexBasis: '50%' }}
-          color="#e05915"
-        />
+        {charts.map(({ title, mu, color }, index) => (
+          <Chart
+            key={index}
+            title={title}
+            mu={mu}
+            color={color}
+            style={{ flexBasis: '50%' }}
+          />
+        ))}
       </div>
     </div>
   )
